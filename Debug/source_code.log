@@ -1,0 +1,19 @@
+﻿  
+  Compiling C: main.c
+  avr-gcc -c -mmcu=atmega32 -I. -gdwarf-2 -DF_CPU=8000000UL -Os -funsigned-char -funsigned-bitfields -fpack-struct -fshort-enums -Wall -Wstrict-prototypes -Wa,-adhlns=./main.lst  -std=gnu99 -MMD -MP -MF .dep/main.o.d main.c -o main.o 
+  
+  Linking: main.elf
+  avr-gcc -mmcu=atmega32 -I. -gdwarf-2 -DF_CPU=8000000UL -Os -funsigned-char -funsigned-bitfields -fpack-struct -fshort-enums -Wall -Wstrict-prototypes -Wa,-adhlns=main.o  -std=gnu99 -MMD -MP -MF .dep/main.elf.d main.o ili9341.o ili9341gfx.o --output main.elf -Wl,-Map=main.map,--cref     -lm
+  
+  Creating load file for Flash: main.hex
+  avr-objcopy -O ihex -R .eeprom -R .fuse -R .lock main.elf main.hex
+  
+  Creating load file for EEPROM: main.eep
+  avr-objcopy -j .eeprom --set-section-flags=.eeprom="alloc,load" \
+  	--change-section-lma .eeprom=0 --no-change-warnings -O ihex main.elf main.eep || exit 0
+  
+  Creating Extended Listing: main.lss
+  avr-objdump -h -S -z main.elf > main.lss
+  
+  Creating Symbol Table: main.sym
+  avr-nm -n main.elf > main.sym
